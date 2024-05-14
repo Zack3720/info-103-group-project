@@ -21,6 +21,7 @@ def main():
     @client.tree.command(name= "hello", description= "Prints hellow world")
     async def hello(ctx: discord.Interaction):
         await ctx.channel.send("Hello world!")
+        return
 
     # Now that we've defined how the bot should work, start running your bot
     client.run(keys.discord_token)
