@@ -7,6 +7,14 @@ reddit = praw.Reddit(
     user_agent="a custom python script for user /" + str(keys.reddit_username)
 )
 
-def getRedditSubmissions(subredditName: str):
-    
-    pass
+# Gets a specified number of post from a given subreddit.
+#
+# Parameters:
+#   subredditName   - the name of the subreddit to return post from
+#   postCount       - the number of post to return
+#
+# Returns: A list of reddit submissions
+def getRedditSubmissions(subredditName: str, postCount: int):
+    subreddit = reddit.subreddit(str)
+    submissions = subreddit.hot(limit=postCount)
+    return submissions
