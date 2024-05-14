@@ -14,7 +14,10 @@ reddit = praw.Reddit(
 #   postCount       - the number of post to return
 #
 # Returns: A list of reddit submissions
-def getRedditSubmissions(subredditName: str, postCount: int):
-    subreddit = reddit.subreddit(str)
+def getRedditSubmissions(subredditName: str, postCount: int) -> list:
+    subreddit = reddit.subreddit(subredditName)
     submissions = subreddit.hot(limit=postCount)
-    return submissions
+    # This function returns a list of submissions, if you want to learn more about what is in
+    # a reddit submission here is the link to the documentation:
+    # https://praw.readthedocs.io/en/stable/code_overview/models/submission.html
+    return list(submissions)
