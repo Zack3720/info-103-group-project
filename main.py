@@ -26,12 +26,12 @@ def main():
             await ctx.channel.send("Missing first arguement, subredditName!")
             return
         elif postCount == '':
-            await ctx.channel.send("Missing second arguement, subredditName!")
+            await ctx.channel.send("Missing second arguement, postCount!")
             return
         elif not postCount.isdigit():
             await ctx.channel.send("Second argument must be a number!")
             return
-        
+
         print(type(subredditName))
         print(postCount)
 
