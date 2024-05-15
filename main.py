@@ -24,7 +24,7 @@ def main():
     # @client.tree.command(name= "getpost", description= "Get some number of posts from a subreddit")
     @client.command()
     async def getPost(
-        ctx: discord.Interaction, subredditName, postCount, sentiment="unspecified"
+        ctx: discord.Interaction, subredditName="", postCount="", sentiment="unspecified"
     ):
         if subredditName == "":
             await ctx.channel.send("Missing first arguement, subredditName!")
