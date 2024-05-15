@@ -2,9 +2,11 @@ import discord
 import api_keys as keys
 import get_reddit_info as reddit
 from discord.ext import commands
+import datetime
+
 
 def main():
-    client = commands.Bot(command_prefix='$', intents=discord.Intents.all())
+    client = commands.Bot(command_prefix="$", intents=discord.Intents.all())
 
     # Provide instructions for what your discord bot should do once it has logged in
     @client.event
@@ -22,31 +24,49 @@ def main():
     # @client.tree.command(name= "getpost", description= "Get some number of posts from a subreddit")
     @client.command()
     async def getPost(ctx: discord.Interaction, subredditName, postCount):
-        if subredditName == '':
+        if subredditName == "":
             await ctx.channel.send("Missing first arguement, subredditName!")
             return
-        elif postCount == '':
+        elif postCount == "":
             await ctx.channel.send("Missing second arguement, postCount!")
             return
         elif not postCount.isdigit():
             await ctx.channel.send("Second argument must be a number!")
             return
 
-        print(type(subredditName))
-        print(postCount)
+        print(
+            f"Receive request: (subredditName: {subredditName}, postCount={postCount})"
+        )
 
         submissions = reddit.getRedditSubmissions(subredditName, int(postCount))
 
-        await ctx.channel.send("Here is the titles of the submissions:")
+        await ctx.channel.send(
+            f"Hi, {ctx.author.display_name}. Here are the {int(postCount)} submissions:"
+        )
 
-        for submission in submissions:
-            await ctx.channel.send(submission.title)
+        for i, submission in enumerate(submissions):
+            text = (
+                submission.selftext[:150] + "..."
+                if len(submission.selftext) > 150
+                else submission.selftext
+            )
+            time = datetime.datetime.fromtimestamp(submission.created_utc)
+            embed = discord.Embed(
+                title=f"Post {i + 1}: {submission.title}",
+                url=submission.url,
+                description=text,
+                color=discord.Color.blue(),
+            )
+            embed.set_author(
+                name=submission.author.name, icon_url=submission.author.icon_img
+            )
+            embed.set_footer(text=f"Posted on {time.strftime("%Y-%m-%d %H:%M:%S UTC")}")
+            await ctx.channel.send(embed=embed)
         return
 
     # Now that we've defined how the bot should work, start running your bot
     client.run(keys.discord_token)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
-
-
