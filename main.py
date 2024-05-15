@@ -23,7 +23,9 @@ def main():
     # Adds a command called getPost to the bot. Can be accessed through typing /getPost on discord server
     # @client.tree.command(name= "getpost", description= "Get some number of posts from a subreddit")
     @client.command()
-    async def getPost(ctx: discord.Interaction, subredditName, postCount):
+    async def getPost(
+        ctx: discord.Interaction, subredditName, postCount, sentiment="unspecified"
+    ):
         if subredditName == "":
             await ctx.channel.send("Missing first arguement, subredditName!")
             return
@@ -33,12 +35,15 @@ def main():
         elif not postCount.isdigit():
             await ctx.channel.send("Second argument must be a number!")
             return
+        elif sentiment not in ["unspecified", "positive", "negative"]:
+            await ctx.channel.send("Sentiment is either 'unspecified', 'positive', or 'negative'!")
+            return
 
         print(
-            f"Receive request: (subredditName: {subredditName}, postCount={postCount})"
+            f"Receive request: (subredditName: {subredditName}, postCount={postCount}, sentiment={sentiment})"
         )
 
-        submissions = reddit.getRedditSubmissions(subredditName, int(postCount))
+        submissions = reddit.getRedditSubmissions(subredditName, int(postCount), sentiment)
 
         await ctx.channel.send(
             f"Hi, {ctx.author.display_name}. Here are the {int(postCount)} submissions:"
