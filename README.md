@@ -19,7 +19,11 @@ $ pip install -r requirements.txt
 $ python -c "import nltk; nltk.download('vader_lexicon')"
 ```
 
-4. Run main.py!
+4. Get API keys from reddit and discord. For reddit you will need your username, password, client id, and client secret. You can learn how to get those [here](https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps). For discord all you need is a discord token for a bot. For this you must set up a discord bot, to learn how to do that you can follow this [guide](https://www.writebots.com/discord-bot-token/). 
+
+5. Now that you have your API keys, enter them into the file named `api_keys_example.py` into their corresponding variable. Once done rename that file to `api_keys.py`.
+
+5. Run main.py!
 ```bash
 $ python main.py
 ```
