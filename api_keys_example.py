@@ -1,0 +1,5 @@
+discord_token=""
+reddit_username=""
+reddit_password=""
+reddit_client_id=""
+reddit_client_secret=""
