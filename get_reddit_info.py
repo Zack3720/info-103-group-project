@@ -15,6 +15,17 @@ reddit = praw.Reddit(
 )
 
 
+# Gets a specified number of post from a given subreddit that have a
+# given sentiment. Uses sentiment analysis filter to sort through post
+# with their title and description.
+#
+# Parameters:
+#   subredditName   - the name of the subreddit to return post from
+#   postCount       - the number of post to return
+#   sentiment       - the sentiment to filter by. Must be either 
+#                     "positive" or "negative"
+#
+# Returns: reddit submissions iterator
 def getRedditSubmissionWithSentiment(
     subreddit: praw.models.Subreddit, postCount: int, sentiment: str
 ) -> list:
