@@ -22,7 +22,7 @@ reddit = praw.Reddit(
 # Parameters:
 #   subredditName   - the name of the subreddit to return post from
 #   postCount       - the number of post to return
-#   sentiment       - the sentiment to filter by. Must be either 
+#   sentiment       - the sentiment to filter by. Must be either
 #                     "positive" or "negative"
 #
 # Returns: reddit submissions iterator
@@ -30,10 +30,9 @@ def getRedditSubmissionWithSentiment(
     subreddit: praw.models.Subreddit, postCount: int, sentiment: str
 ) -> list:
     multiplier = 2
+    filtered_submissions = []
     while postCount * multiplier <= 1000:  # At most 1000 post
         submissions = subreddit.hot(limit=postCount * multiplier)
-        filtered_submissions = []
-
         print(f"Search within {postCount * multiplier} posts")
 
         # Loop through fetched submissions and filter based on sentiment
@@ -51,6 +50,8 @@ def getRedditSubmissionWithSentiment(
                 return filtered_submissions
 
         multiplier *= 2
+        filtered_submissions.clear()
+    return filtered_submissions
 
 
 # Gets a specified number of post from a given subreddit.
